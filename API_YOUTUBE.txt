@@ -1,0 +1,31 @@
+SUJET : API YOUTUBE https://developers.google.com/youtube/v3
+
+ENDPOINT:
+
+1) Récuperer les resultat de recherche associer a un mot clé donner
+	https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=fornite&key=[YOUR_API_KEY] HTTP/1.1
+
+2) Récuperer les video en tendance d'un pays
+	https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&regionCode=FR&key=[YOUR_API_KEY]
+
+3) Récuperer les playlist d'une chaine youtubes
+	https://youtube.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&channelId=UCKKY2Jcg_P9fhfHD3ICyMxg&maxResults=25&key=[YOUR_API_KEY] HTTP/1.1
+
+4) Recupere les differentes categories de video d'un pays
+	https://youtube.googleapis.com/youtube/v3/videoCategories?part=snippet&hl=fr&regionCode=FR&key=[YOUR_API_KEY]
+
+5) Récuperer Les information d'une chaine youtube
+	https://youtube.googleapis.com/youtube/v3/channels?part=id%2CcontentOwnerDetails%2Csnippet%2CcontentDetails%2Cstatistics&id=UCXnNL_DTB3N3J_BFx3LGA-w&key=[YOUR_API_KEY]
+
+6) Recupere les video liés a une video id youtube
+	https://youtube.googleapis.com/youtube/v3/search?part=snippet&relatedToVideoId=raIAyq5ih98&type=video&key=[YOUR_API_KEY] HTTP/1.1
+
+7) Recuperer les video d'une playlist youtube
+	https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails%2Cstatus&playlistId=PLbRL6lYUiVozE5p4P-uemi0n6YNPQuYxl&key=[YOUR_API_KEY] HTTP/1.1
+
+Cas d'usage:
+
+1) Recuperer la / les chaines des video en tendance youtube (endpoint: 2, 5)
+2) Recuperer les chaines des video lier a une premiere video youtube (endpoint: 6, 5)
+3) Recuperer les playlist d'une chaine youtube en tendance (endpoint: 2, 3)
+4) Recuperer les playlist d'une chaine et le contenue de la playlist (endpoint 3, 7)
