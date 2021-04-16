@@ -1,16 +1,16 @@
 package httpApi
 import scalaj.http._
+import application.ApplicationConfiguration._
 
 class HttpCallApi {
 
-  val apiKey = ""
-
-  def youtubeSearch(q: String): String = {
-    val response: HttpResponse[String] = Http("https://youtube.googleapis.com/youtube/v3/search")
+  def youtubeSearch(q:String, itemType:String): String = {
+    val response: HttpResponse[String] = Http(urlSearch)
       .param("key",apiKey)
       .param("part","snippet")
       .param("maxResults","25")
       .param("q",q)
+      .param("type",itemType)
       .asString
     println(response)
     println(response.body)
