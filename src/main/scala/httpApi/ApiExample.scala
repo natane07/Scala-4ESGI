@@ -5,7 +5,7 @@ object ApiExample {
   def main(args: Array[String]): Unit = {
     val http = new HttpCallApi()
     // SEARCH
-    val jsonResponse:String = http.youtubeSearch("joueur du grenier", "channel")
+//    val jsonResponse:String = http.youtubeSearch("squezzie", "channel")
     // PlaylistItems
 //    val jsonResponse:String = http.youtubePlaylistItems("PLbRL6lYUiVozE5p4P-uemi0n6YNPQuYxl")
     // Playlist
@@ -14,9 +14,14 @@ object ApiExample {
 //    val jsonResponse:String = http.youtubeVideoLink("raIAyq5ih98")
     // Video Youtube
 //    val jsonResponse:String = http.youtubeVideos("7mgex4sEUvc")
+      // videoChannel
+//   val jsonResponse:String = http.youtubeChannels("UCWeg2Pkate69NFdBeuRFTAw")
+    // youtube tendance
+    val jsonResponse:String = http.youtubeTendance()
 
     val parseJson = new Parse()
     val listYoutubeJson = parseJson.json(jsonResponse)
+    println(listYoutubeJson.length)
     listYoutubeJson.foreach(youtubeJson => {
       println(youtubeJson.id)
       println(youtubeJson.publishedAt)

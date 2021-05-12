@@ -100,15 +100,15 @@ class HttpCallApi {
 
   /**
    * Call api pour recuperer les informations des videos en tendance
-   * @param videoId id de la video
    * @return Json String
    */
-  def youtubeTendance(videoId:String): String = {
+  def youtubeTendance(): String = {
     val response: HttpResponse[String] = Http(urlVideos)
       .param("key",apiKey)
       .param("part","snippet")
       .param("chart","mostPopular")
       .param("regionCode", "Fr")
+      .param("maxResults", "10")
       .asString
     println(response.body)
     response.body

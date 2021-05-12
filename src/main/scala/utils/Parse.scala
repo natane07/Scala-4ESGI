@@ -20,11 +20,18 @@ class Parse {
     for (item <- itemsArr) {
       val youtubeJson: YoutubeJson = new YoutubeJson()
       val itemsHmap = ujson.read(item)
-      val snippet = itemsHmap("snippet") //snippet
+      // snippet
+      var snippet: ujson.Value = null
+      try {
+        snippet = itemsHmap("snippet") //snippet
+      } catch {
+        case e: Exception => None
+      }
       // id
-      if (itemsHmap("id").isInstanceOf[String]) {
-        print(itemsHmap("id").str)
+      try {
         youtubeJson.id = itemsHmap("id").str
+      } catch {
+        case e: Exception => None
       }
       // publishedAt
       try {
