@@ -21,6 +21,7 @@ class Channel() {
 
   var videos: List[Video] = List()
 
+  override def toString = s"Channel($id, $publishedAt, $title, $description, $country, $playlists, $videos)"
 }
 
 object Channel {
