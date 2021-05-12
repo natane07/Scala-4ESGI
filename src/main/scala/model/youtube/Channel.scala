@@ -21,18 +21,14 @@ class Channel(channelId: String) {
 
   var videos: List[Video] = List()
 
+  val http = new HttpCallApi()
+  val jsonResponse: String = http.youtubeChannels(channelId)
+  val parseJson = new Parse()
+  val listChannelJson = parseJson.json(jsonResponse)
 
-  def Channel(channelId: String): Unit = {
-    val http = new HttpCallApi()
-    val jsonResponse: String = http.youtubeChannels(channelId)
-    val parseJson = new Parse()
-    val listYoutubeJson = parseJson.json(jsonResponse)
-
-    this.id = listYoutubeJson.head.id
-    this.publishedAt = listYoutubeJson.head.publishedAt
-    this.title = listYoutubeJson.head.title
-    this.description = listYoutubeJson.head.description
-    this.country = listYoutubeJson.head.country
-  }
-
+  this.id = listChannelJson.head.id
+  this.publishedAt = listChannelJson.head.publishedAt
+  this.title = listChannelJson.head.title
+  this.description = listChannelJson.head.description
+  this.country = listChannelJson.head.country
 }
