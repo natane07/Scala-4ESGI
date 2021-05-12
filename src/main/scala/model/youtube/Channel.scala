@@ -5,7 +5,7 @@ import utils._
 
 import java.util.Date
 
-class Channel(channelId: String) {
+class Channel() {
 
   var id: String = null
 
@@ -21,14 +21,22 @@ class Channel(channelId: String) {
 
   var videos: List[Video] = List()
 
-  val http = new HttpCallApi()
-  val jsonResponse: String = http.youtubeChannels(channelId)
-  val parseJson = new Parse()
-  val listChannelJson = parseJson.json(jsonResponse)
+}
 
-  this.id = listChannelJson.head.id
-  this.publishedAt = listChannelJson.head.publishedAt
-  this.title = listChannelJson.head.title
-  this.description = listChannelJson.head.description
-  this.country = listChannelJson.head.country
+object Channel {
+  def getChannel(channelId: String): Channel = {
+    val http = new HttpCallApi()
+    val jsonResponse: String = http.youtubeChannels(channelId)
+    val parseJson = new Parse()
+    val listChannelJson = parseJson.json(jsonResponse)
+    val channel = new Channel()
+
+    channel.id = listChannelJson.head.id
+    channel.publishedAt = listChannelJson.head.publishedAt
+    channel.title = listChannelJson.head.title
+    channel.description = listChannelJson.head.description
+    channel.country = listChannelJson.head.country
+
+    channel
+  }
 }
