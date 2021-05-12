@@ -1,38 +1,39 @@
 package model.youtube
 
+import httpApi.HttpCallApi
+import utils.Parse
+
 import java.util.Date
 
 class Video {
 
-  private val id:String = null
+  var id:String = null
 
-  private val publishedAt:Date = null
+  var publishedAt:Date = null
 
-  private val channelId:String = null
+  var channelId:String = null
 
-  private val title:String = null
+  var title:String = null
 
-  private val description:String = null
+  var description:String = null
 
-  private var tags:List[String] = List()
+  var tags:List[String] = List()
 
-  private val defaultAudioLanguage:String = null
+  val defaultAudioLanguage:String = null
 
-  def getId(): String ={ return this.id }
-
-  def getPublishedAt(): Date ={ return this.publishedAt }
-
-  def getChannelId(): String ={ return this.channelId }
-
-  def getTitle(): String ={ return this.title }
-
-  def getDescription(): String ={ return this.description }
-
-  def getTags(): List[String] ={ return this.tags }
-
-  def getDefaultAudioLanguage(): String ={ return this.defaultAudioLanguage }
-
-
+  def getRelatedVideos(): List[Video] ={
+    var relatedVideos: List[Video] = List()
+    val http = new HttpCallApi()
+    val jsonResponse: String = http.youtubeVideoLink(this.id)
+    val parseJson = new Parse()
+    val listRelatedVideoJson = parseJson.json(jsonResponse)
+    listRelatedVideoJson.foreach(relatedVideo => {
+      // Correct when video constructor done
+      val video: Video = new Video()
+      relatedVideos ::= video
+    })
+    relatedVideos
+  }
 }
 
 //  "items": [
