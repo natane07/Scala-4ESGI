@@ -18,7 +18,6 @@ class HttpCallApi {
       .param("q",q)
       .param("type",itemType)
       .asString
-    println(response.body)
     response.body
   }
 
@@ -34,7 +33,6 @@ class HttpCallApi {
       .param("relatedToVideoId", relatedToVideoId)
       .param("type", "video")
       .asString
-    println(response.body)
     response.body
   }
 
@@ -49,7 +47,6 @@ class HttpCallApi {
       .param("part","snippet")
       .param("id",channelId)
       .asString
-    println(response.body)
     response.body
   }
 
@@ -64,7 +61,6 @@ class HttpCallApi {
       .param("part","snippet")
       .param("channelId",channelId)
       .asString
-    println(response.body)
     response.body
   }
 
@@ -79,7 +75,6 @@ class HttpCallApi {
       .param("part","snippet")
       .param("playlistId",playlistId)
       .asString
-    println(response.body)
     response.body
   }
 
@@ -94,7 +89,6 @@ class HttpCallApi {
       .param("part","snippet")
       .param("id",videoId)
       .asString
-    println(response.body)
     response.body
   }
 
@@ -110,7 +104,6 @@ class HttpCallApi {
       .param("regionCode", "Fr")
       .param("maxResults", "10")
       .asString
-    println(response.body)
     response.body
   }
 
