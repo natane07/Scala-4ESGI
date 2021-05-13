@@ -45,10 +45,27 @@ object Playlist {
       playlist.publishedAt = youtubeJson.publishedAt
       playlist.channelId = youtubeJson.channelId
       playlist.title = youtubeJson.title
-      // TODO : ajouter les videos de la playlist
+      playlist.videos = Playlist.getVideoPlaylist(youtubeJson.id)
       listPlaylist = listPlaylist ++ List(playlist)
     })
     listPlaylist
+  }
+
+  def getVideoPlaylist(playlistId: String) : List[Video] = {
+    // Call api
+    val http = new HttpCallApi()
+    val jsonResponse:String = http.youtubePlaylistItems(playlistId)
+    // Parse du json
+    val parseJson = new Parse()
+    val listYoutubeJson = parseJson.json(jsonResponse)
+    // List des playlist
+    var listVideoPlaylist: List[Video] = List()
+
+    listYoutubeJson.foreach(youtubeJson => {
+      val video: Video = Video.getVideo(youtubeJson.videoId)
+      listVideoPlaylist = listVideoPlaylist ++ List(video)
+    })
+    listVideoPlaylist
   }
 
 }

@@ -84,7 +84,6 @@ class Parse {
       }
       // videoId
       try {
-        println(snippet("resourceId"))
         youtubeJson.videoId = snippet("resourceId")("videoId").str
       } catch {
         case e: Exception => None
