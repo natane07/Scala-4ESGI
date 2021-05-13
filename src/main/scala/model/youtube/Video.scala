@@ -31,8 +31,7 @@ class Video() {
     val parseJson = new Parse()
     val listRelatedVideoJson = parseJson.json(jsonResponse)
     listRelatedVideoJson.foreach(relatedVideo => {
-      // Correct when video constructor done
-      val video: Video = new Video()
+      val video: Video = Video.getVideo(relatedVideo.id)
       relatedVideos ::= video
     })
     relatedVideos

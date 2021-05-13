@@ -37,6 +37,7 @@ object Channel {
     channel.title = listChannelJson.head.title
     channel.description = listChannelJson.head.description
     channel.country = listChannelJson.head.country
+    channel.playlists = Playlist.getPlaylistChannel(channel.id)
 
     channel
   }
