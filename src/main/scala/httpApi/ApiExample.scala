@@ -7,9 +7,9 @@ object ApiExample {
     // SEARCH
 //    val jsonResponse:String = http.youtubeSearch("squezzie", "channel")
     // PlaylistItems
-//    val jsonResponse:String = http.youtubePlaylistItems("PLbRL6lYUiVozE5p4P-uemi0n6YNPQuYxl")
+//    val jsonResponse:String = http.youtubePlaylistItems("PLbRL6lYUiVoyN-OZo7bvt4UOzx8uxkyXn")
     // Playlist
-//    val jsonResponse:String = http.youtubePlaylist("UCKKY2Jcg_P9fhfHD3ICyMxg")
+    val jsonResponse:String = http.youtubePlaylist("UCKKY2Jcg_P9fhfHD3ICyMxg")
     // Video liés a une video id youtube
 //    val jsonResponse:String = http.youtubeVideoLink("raIAyq5ih98")
     // Video Youtube
@@ -17,7 +17,7 @@ object ApiExample {
       // videoChannel
 //   val jsonResponse:String = http.youtubeChannels("UCWeg2Pkate69NFdBeuRFTAw")
     // youtube tendance
-    val jsonResponse:String = http.youtubeTendance()
+//    val jsonResponse:String = http.youtubeTendance()
 
     val parseJson = new Parse()
     val listYoutubeJson = parseJson.json(jsonResponse)
