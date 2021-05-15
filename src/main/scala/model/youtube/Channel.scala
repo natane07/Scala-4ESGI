@@ -29,6 +29,18 @@ class Channel() {
 object Channel {
 
   /**
+   * Rechercher une chaine youtube
+   * @param q recherche youtube
+   * @return id de la chaine
+   */
+  def searchChannel(q: String): String = {
+    val http = new HttpCallApi()
+    val jsonResponse: String = http.youtubeSearch(q)
+    val parseJson = new Parse()
+    val listSearchJson = parseJson.json(jsonResponse)
+    listSearchJson.head.channelId
+  }
+  /**
    * Recuperer les informations d'une chaine youtube
    * @param channelId identifiant de la chaine youtube
    * @return Une instance de la classe Channel
