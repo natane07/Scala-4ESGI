@@ -1,15 +1,15 @@
 package utils
 import java.util.Properties
-import java.sql.{Connection, DriverManager, Statement, ResultSet}
+import java.sql.{Connection, DriverManager, Statement}
 import application.ApplicationConfiguration
 object Database {
 
   /**
    * Insert data in SQL JDBC Database
    * @param request requete SQL
-   * @return
+   * @return id de la ligne creer en bdd
    */
-  def insertDatabase(request: String): Boolean = {
+  def insertDatabase(request: String): Int = {
     Class.forName("com.mysql.jdbc.Driver")
     val dbc: Connection = DriverManager.getConnection(
         ApplicationConfiguration.urlDatabase,
@@ -17,10 +17,22 @@ object Database {
         ApplicationConfiguration.passwordDatabase
     )
     val st: Statement = dbc.createStatement()
-    val rs = st.executeUpdate(request)
+    st.executeUpdate(request, Statement.RETURN_GENERATED_KEYS)
+
+    // retourne l'id
+    var idDb = 0
+    try {
+      val rep = st.getGeneratedKeys()
+      if(rep.next()) {
+        idDb = rep.getInt(1)
+      }
+    } catch {
+      case e: Exception => {
+        dbc.close
+        return idDb
+      }
+    }
     dbc.close
-    if (rs == 1)
-      return true
-    false
+    idDb
   }
 }
