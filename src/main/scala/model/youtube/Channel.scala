@@ -21,10 +21,30 @@ class Channel() {
 
   var videos: List[Video] = List()
 
-  override def toString = s"Channel($id, $publishedAt, $title, $description, $country, $playlists, $videos)"
+  var idDb: Int = 0
+
+  override def toString = s"Channel($id, $publishedAt, $title, $description, $country, $playlists, $videos, $idDb)"
 }
 
 object Channel {
+
+  /**
+   * Rechercher une chaine youtube
+   * @param q recherche youtube
+   * @return id de la chaine
+   */
+  def searchChannel(q: String): String = {
+    val http = new HttpCallApi()
+    val jsonResponse: String = http.youtubeSearch(q)
+    val parseJson = new Parse()
+    val listSearchJson = parseJson.json(jsonResponse)
+    listSearchJson.head.channelId
+  }
+  /**
+   * Recuperer les informations d'une chaine youtube
+   * @param channelId identifiant de la chaine youtube
+   * @return Une instance de la classe Channel
+   */
   def getChannel(channelId: String): Channel = {
     val http = new HttpCallApi()
     val jsonResponse: String = http.youtubeChannels(channelId)
@@ -34,11 +54,25 @@ object Channel {
 
     channel.id = listChannelJson.head.id
     channel.publishedAt = listChannelJson.head.publishedAt
-    channel.title = listChannelJson.head.title
-    channel.description = listChannelJson.head.description
+    channel.title = listChannelJson.head.title.replace("\"", "")
+    channel.description = listChannelJson.head.description.replace("\"", "")
     channel.country = listChannelJson.head.country
-    channel.playlists = Playlist.getPlaylistChannel(channel.id)
+    val idDbChannel = Channel.insertDataDb(channel)
+    channel.playlists = Playlist.getPlaylistChannel(channel.id, idDbChannel)
 
     channel
+  }
+
+  /**
+   * Insertion des information d'une chaine en BDD et renvoie l'id de la ligne inseret
+   * @param channel Instance de la classe channel
+   * @return id de la ligne inseret
+   */
+  def insertDataDb(channel: Channel): Int = {
+    val query = s"INSERT INTO channel (id_channel, published_at, title, description, country) " +
+      s"""VALUES ("${channel.id}", "${Utils.dateToString(channel.publishedAt)}", "${channel.title}", "${channel.description}", "${channel.country}")"""
+    val idDb = Database.insertDatabase(query)
+    channel.idDb = idDb
+    idDb
   }
 }
