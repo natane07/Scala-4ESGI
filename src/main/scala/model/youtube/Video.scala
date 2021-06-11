@@ -74,6 +74,31 @@ object Video {
   }
 
   /**
+   * Récuperer les videos en tendance youtube API et insére dans la BDD
+   */
+  def getVideoTendance() = {
+    // Call api
+    val http = new HttpCallApi()
+    val jsonResponse:String = http.youtubeTendance()
+    // Parse du json
+    val parseJson = new Parse()
+    val listYoutubeJson = parseJson.json(jsonResponse)
+    // Instance de video
+    var numTendance:Int = 1
+    listYoutubeJson.foreach(youtubeJson => {
+      val video = new Video()
+      video.id = youtubeJson.id
+      video.publishedAt = youtubeJson.publishedAt
+      video.channelId = youtubeJson.channelId
+      video.title = youtubeJson.title.replace("\"", "")
+      video.description = youtubeJson.description.replace("\"", "")
+      video.tags = youtubeJson.tags
+      Video.insertDataTendanceDb(video, numTendance)
+      numTendance += 1
+    })
+  }
+
+  /**
    * Insertion des données en BDD et renvoie l'id de la ligne inseret
    * @param video Instance de la classe playlist
    * @param idDbPlaylist id de la playlist en BDD
@@ -83,6 +108,20 @@ object Video {
     val query = s"INSERT INTO video (id_video, published_at, channel_id, title, description, tags, default_audio_language, id_playlist) " +
       s""" VALUES ("${video.id}", "${Utils.dateToString(video.publishedAt)}", "${video.channelId}", "${video.title}", """ +
       s""" "${video.description}", "${video.tags.map(x => x.replace("\"", ""))}", "${video.defaultAudioLanguage}", ${idDbPlaylist} )"""
+    val idDb = Database.insertDatabase(query)
+    video.idDb = idDb
+    idDb
+  }
+
+  /**
+   * Insertion d'une video en tendance dans la table des tendances
+   * @param video Instance de la classe playlist
+   * @return id de la ligne inseret
+   */
+  def insertDataTendanceDb(video: Video, numTendance: Int): Int = {
+    val query = s"INSERT INTO tendance (id_video, published_at, channel_id, title, description, tags, num_tendance) " +
+      s""" VALUES ("${video.id}", "${Utils.dateToString(video.publishedAt)}", "${video.channelId}", "${video.title}", """ +
+      s""" "${video.description}", "${video.tags.map(x => x.replace("\"", ""))}", ${numTendance})"""
     val idDb = Database.insertDatabase(query)
     video.idDb = idDb
     idDb
