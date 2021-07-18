@@ -2,7 +2,7 @@ SUJET : API YOUTUBE https://developers.google.com/youtube/v3
 
 ENDPOINT:
 
-1) Récuperer les resultat de recherche associer a un mot clé donner
+1) Récuperer les resultat de recherche associer a un mot clé donner (une chaine youtube)
 	https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=fornite&key=[YOUR_API_KEY] HTTP/1.1
 
 2) Récuperer les video en tendance d'un pays
@@ -10,9 +10,6 @@ ENDPOINT:
 
 3) Récuperer les playlist d'une chaine youtubes
 	https://youtube.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&channelId=UCKKY2Jcg_P9fhfHD3ICyMxg&maxResults=25&key=[YOUR_API_KEY] HTTP/1.1
-
-4) Recupere les differentes categories de video d'un pays
-	https://youtube.googleapis.com/youtube/v3/videoCategories?part=snippet&hl=fr&regionCode=FR&key=[YOUR_API_KEY]
 
 5) Récuperer Les information d'une chaine youtube
 	https://youtube.googleapis.com/youtube/v3/channels?part=id%2CcontentOwnerDetails%2Csnippet%2CcontentDetails%2Cstatistics&id=UCXnNL_DTB3N3J_BFx3LGA-w&key=[YOUR_API_KEY]
